@@ -1,0 +1,39 @@
+<div class="con">
+  <div class="save">
+    <button mat-raised-button class="sbtn" (click)="submit()">
+      Einteilung Speichern
+    </button>
+    <mat-icon
+      *ngIf="send == true"
+      aria-hidden="true"
+      aria-label="Example home icon"
+      class="j"
+      >check</mat-icon
+    >
+  </div>
+  <div class="dragNdrop" *ngFor="let pos of einteilung">
+    <h2>{{ pos.id.slice(0, -1) }}</h2>
+    <div
+      cdkDropList
+      id="{{ pos.id }}"
+      [cdkDropListData]="pos.list"
+      [cdkDropListConnectedTo]="connectedTo"
+      class="example-list"
+      (cdkDropListDropped)="drop($event)"
+      cdkDrag
+      *ngIf="pos.list.length > 0"
+    >
+      <div *ngFor="let item of pos.list"
+        [ngClass]="{
+          'example-box': item.state === undefined || !item.state.toLowerCase().includes('krank') &&
+          !item.state.toLowerCase().includes('urlaub'),
+          'Urlaub': item.state.toLowerCase().includes('urlaub'),
+          'Krank': item.state.toLowerCase().includes('krank') || item.state.toLowerCase().includes('abwesend')
+        }"
+        cdkDrag
+      >
+        {{ item.name }}
+      </div>
+    </div>
+  </div>
+</div>

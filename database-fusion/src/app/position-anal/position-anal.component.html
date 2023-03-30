@@ -1,0 +1,22 @@
+<div class="con2">
+  <div class="datepicker">
+    <mat-form-field appearance="fill" class="example-form-field">
+      <mat-label class="dl">Wähle ein Datum</mat-label>
+      <input [disabled]="true" class="output" matInput [matDatepicker]="datepicker" (dateInput)="addEvent($event)" >
+      <mat-datepicker-toggle  matSuffix [for]="datepicker" >
+      <mat-icon matDatepickerToggleIcon class="Ic">event</mat-icon>
+      </mat-datepicker-toggle>
+      <mat-datepicker #datepicker disabled="false" >
+        <mat-datepicker-actions>
+          <button mat-button matDatepickerCancel>Abbrechen</button>
+          <button mat-raised-button color="primary" matDatepickerApply>Bestätigen</button>
+        </mat-datepicker-actions>
+      </mat-datepicker>
+    </mat-form-field>
+  </div>
+  <div class="bt" *ngIf="this.app.exist != false">
+    <button mat-raised-button class="sbtn" (click)="xlsxExport()">
+      Excel Export
+    </button>
+  </div>
+</div>

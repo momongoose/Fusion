@@ -1,0 +1,81 @@
+<div class="con">
+  <div class="select">
+    <form class="example-form form">
+      <mat-form-field class="example-full-width selection" appearance="fill">
+        <mat-label>Zeitspanne</mat-label>
+        <input type="text"
+               placeholder="Wähle einen Zeitraum"
+               aria-label="Zeitspanne"
+               matInput
+               [formControl]="myControl"
+               [matAutocomplete]="auto">
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="DataFusionStart($event.option.value)">
+          <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+            {{option}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <h1>{{text}}</h1>
+      <mat-form-field class="example-full-width selection" appearance="fill"  *ngIf="selected == true">
+        <mat-label>Janus</mat-label>
+        <input type="text"
+               placeholder="Wähle einen Zeitraum"
+               aria-label="Janus"
+               matInput
+               [formControl]="myControl2"
+               [matAutocomplete]="auto2">
+        <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete" (optionSelected)="DataFusionEnd($event.option.value)">
+          <mat-option *ngFor="let option2 of filteredOptions2 | async" [value]="option2">
+            {{option2}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </form>
+  </div>
+  <div class="filter">
+    <mat-form-field class="in">
+      <input matInput (keyup)="applyFilter($event)" placeholder="Filter">
+    </mat-form-field>
+  </div>
+  <div class="table example-container mat-elevation-z8">
+
+    <mat-table [dataSource]="dataSource" matSort>
+
+      <!-- Errorcode Column -->
+      <ng-container matColumnDef="code">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Errorcode </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.code}} </mat-cell>
+      </ng-container>
+
+      <!-- Errortext Column -->
+      <ng-container matColumnDef="text">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Errortext </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.text}} </mat-cell>
+      </ng-container>
+
+      <!-- Anzahl Column -->
+      <ng-container matColumnDef="count">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Anzahl </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.count}} </mat-cell>
+      </ng-container>
+
+      <!-- Bewegungen Column -->
+      <ng-container matColumnDef="moves">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Bewegungen </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.moves}} </mat-cell>
+      </ng-container>
+
+      <!-- Datum Column -->
+      <ng-container matColumnDef="date">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Datum </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.date}} </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;">
+      </mat-row>
+    </mat-table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  </div>
+</div>

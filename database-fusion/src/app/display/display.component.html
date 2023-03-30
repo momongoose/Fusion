@@ -1,0 +1,110 @@
+<div class="con">
+  <h1 class="date">
+    {{ date }}
+  </h1>
+  <mat-tab-group
+    mat-align-tabs="center"
+    class="group"
+    [selectedIndex]="selectedIndex"
+  >
+    <!--<mat-tab label=""
+      ><div class="conFhead">
+        <h1>Frühschicht</h1>
+      </div>
+      <div class="conF">
+        <div class="dragNdrop" *ngFor="let pos of einteilungF">
+          <h2>{{ pos.id.slice(0, -1) }}</h2>
+          <div class="example-list">
+            <div
+              *ngFor="let item of pos.list"
+              [ngClass]="{
+                Urlaub: item.state.toLowerCase().includes('urlaub'),
+                Krank: item.state.toLowerCase().includes('krank'),
+                'example-box':
+                  !item.state.toLowerCase().includes('krank') &&
+                  !item.state.toLowerCase().includes('urlaub')
+              }"
+            >
+              {{ item.name }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>-->
+    <mat-tab label="">
+      <div class="conShead">
+        <h1>Frühschicht + Spätschicht</h1>
+      </div>
+      <div class="conS">
+        <div class="dragNdrop" *ngFor="let pos of einteilungS">
+          <h2>{{ pos.id.slice(0, -1) }}</h2>
+          <div class="example-list">
+            <div
+              *ngFor="let item of pos.list"
+              [ngClass]="{
+                'break':item.break,
+                'example-box':item.state === undefined || !item.state.toLowerCase().includes('krank') &&
+          !item.state.toLowerCase().includes('urlaub'),
+          'Urlaub': item.state.toLowerCase().includes('urlaub'),
+          'Krank': item.state.toLowerCase().includes('krank'),
+          'Grün': pos.color == 'green',
+          'Türkis': pos.color == 'turkey',
+          'Gelb': pos.color == 'yellow',
+          'Orange': pos.color == 'orange',
+          'Lila': pos.color == 'purple',
+          'Grau': pos.color == 'grey',
+          'Weiß': pos.color == 'white'
+              }"
+            >
+              {{ item.name }} {{item.time}}
+              <img style="height:24px" *ngIf="Json.good.includes(item.name)" src = "../../assets/pic/greenF.png"/>
+              <img style="height:24px" *ngIf="Json.ok.includes(item.name)" src = "../../assets/pic/yellowF.png"/>
+              <img style="height:24px" *ngIf="Json.no.includes(item.name)" src = "../../assets/pic/redF.png"/>
+              <img style="height:28px" *ngIf="item.state.includes('pav16')" src = "../../assets/pic/16.png"/>
+              <svg style="width:22px;height:22px;color:#eeff00" viewBox="0 0 24 24" *ngIf="item.state.includes('früh')">
+                <path fill="currentColor" d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M9,7V17H11V13H14V11H11V9H15V7H9Z" />
+            </svg>
+            <svg style="width:22px;height:22px;color:#e1ffd0" viewBox="0 0 24 24" *ngIf="item.state.includes('spät')">
+              <path fill="currentColor" d="M11,7A2,2 0 0,0 9,9V11A2,2 0 0,0 11,13H13V15H9V17H13A2,2 0 0,0 15,15V13A2,2 0 0,0 13,11H11V9H15V7H11M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2Z" />
+          </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label=""
+      ><div class="conNhead">
+        <h1>Nachtschicht</h1>
+      </div>
+      <div class="conN">
+        <div class="dragNdrop" *ngFor="let pos of einteilungN">
+          <h2>{{ pos.id.slice(0, -1) }}</h2>
+          <div class="example-list">
+            <div
+              *ngFor="let item of pos.list"
+              [ngClass]="{
+                'break':item.break,
+                'example-box':item.state === undefined || !item.state.toLowerCase().includes('krank') &&
+          !item.state.toLowerCase().includes('urlaub') && !pos.id.includes('Urlaub') && !pos.id.includes('Krank'),
+          'Urlaub': item.state.toLowerCase().includes('urlaub') || pos.id.includes('Urlaub'),
+          'Krank': item.state.toLowerCase().includes('krank') || pos.id.includes('Krank'),
+          'Grün': pos.color == 'green',
+          'Türkis': pos.color == 'turkey',
+          'Gelb': pos.color == 'yellow',
+          'Orange': pos.color == 'orange',
+          'Lila': pos.color == 'purple',
+          'Grau': pos.color == 'grey',
+          'Weiß': pos.color == 'white'
+              }"
+            >
+              {{ item.name }} {{item.time}}
+              <img style="height:24px" *ngIf="Json.good.includes(item.name)" src = "../../assets/pic/greenF.png"/>
+              <img style="height:24px" *ngIf="Json.ok.includes(item.name)" src = "../../assets/pic/yellowF.png"/>
+              <img style="height:24px" *ngIf="Json.no.includes(item.name)" src = "../../assets/pic/redF.png"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

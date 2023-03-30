@@ -1,0 +1,29 @@
+
+.con {
+  background-color: rgba(49, 166, 255, 0.746);
+  height: 88vh;
+}
+
+.form {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+.selection{
+  padding: 0 1vw 0 1vw;
+}
+
+.select{
+  width: max-content;
+  margin: auto;
+  }
+
+.filter{
+  width: max-content;
+  margin: auto;
+}
+.in{
+  width: 80vw;
+  text-align: center;
+}

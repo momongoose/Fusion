@@ -1,0 +1,28 @@
+
+/*table CSS*/
+
+.filter{
+  width: max-content;
+  margin: auto;
+}
+
+.in{
+  width: 80vw;
+  text-align: center;
+}
+
+.table{
+  width: 80vw;
+  text-align: center;
+  width: max-content;
+  margin: auto;
+}
+
+.mat-row:hover {
+  background-color: rgba(0, 0, 0, 0.185);
+}
+
+.demo-row-is-clicked {
+  font-weight: bold;
+}
+/*end of table CSS*/

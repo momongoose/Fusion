@@ -1,0 +1,31 @@
+.con {
+  background-color: rgba(49, 166, 255, 0.746);
+  height: 100%;
+}
+
+.select{
+width: max-content;
+margin: auto;
+}
+
+.form {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+.selection{
+  padding: 0 1vw 0 1vw;
+}
+
+.chart{
+  width: max-content;
+  margin: auto;
+}
+
+@media only screen and (max-width: 1200px) {
+  .con{
+    height: 155%;
+  }
+}
+

@@ -1,0 +1,98 @@
+.con{
+  background-color: azure;
+  width: 60vw;
+  height: 40vh;
+  border-radius: 1000px;
+  margin: auto;
+}
+
+.over {
+  padding-top: 25vh;
+}
+
+.pas{
+background-color: cornflowerblue;
+padding: 0 0 0.8vh 0;
+border-radius: 25px;
+}
+
+.inputs{
+  padding-top: 5%;
+  width: max-content;
+  margin: auto;
+}
+h1{
+  padding-top: 5vh;
+  text-align: center;
+  color: rgb(15, 13, 90);
+  font-size: 70px;
+  text-shadow: 2px 2px 4px rgba(179, 147, 211, 0.1),
+  3px 4px 4px rgba(179, 147, 211, 0.15),
+  4px 6px 4px rgba(179, 147, 211, 0.2),
+  5px 8px 4px rgba(179, 147, 211, 0.25);
+  transition: ease-in 0.6s;
+}
+@media only screen and (max-width: 1600px) {
+  h1{
+    transition: ease-in 0.6s;
+    font-size: 40px;
+  }
+  .inputs{
+    transition: ease-in 0.6s;
+    padding-top: 0;
+  }
+  .submit {
+    transition: ease-in 0.6s;
+    margin-top: 20px;
+  }
+}
+
+.submit {
+  padding-top: 5%;
+  width: max-content;
+  margin: auto;
+}
+.in {
+  margin-bottom: 0.6vh;
+}
+.link{
+  text-align: center;
+}
+
+.loadingCon{
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #00000065;
+}
+
+.loading {
+padding-top: 40vh;
+  width: max-content;
+  margin: auto;
+}
+
+.loa {
+  font-size: 10vh;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.spin{
+  padding-top: 2vh;
+  width: max-content;
+  margin: auto;
+}
+
+.delCon{
+  padding-top: 4vh;
+  padding-bottom: 4vh;
+  width: max-content;
+  margin: auto;
+  text-align: center;
+  width: 40vw;
+  height: 10vh;
+  background-color: rgb(255, 255, 255);
+  border-radius: 50px;
+}

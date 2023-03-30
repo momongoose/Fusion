@@ -1,0 +1,35 @@
+.check{
+  width: max-content;
+  margin: auto;
+  font-size: 26px;
+  padding-top: 1vh;
+}
+
+.checkis{
+  width: max-content;
+  margin: auto;
+  background-color: aliceblue;
+  padding: 1vh 10vw 1vh 10vw;
+  margin-top: 2vh;
+  border-radius: 25px;
+}
+input[type=checkbox] {
+  position: relative;
+  bottom: 0.5vh;
+  transform: scale(1.5);
+}
+
+.log{
+  width: max-content;
+  margin: auto;
+  text-align: center;
+  width: 60vw;
+}
+.table{
+  width: 100%;
+}
+
+.in {
+  width: 80%;
+}
+

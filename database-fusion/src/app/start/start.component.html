@@ -1,0 +1,52 @@
+<div class="con">
+  <div class="select">
+    <form class="example-form form">
+      <mat-form-field class="example-full-width selection" appearance="fill">
+        <mat-label>Zeitspanne</mat-label>
+        <input type="text"
+               placeholder="Wähle einen Zeitraum"
+               aria-label="Zeitspanne"
+               matInput
+               [formControl]="myControl"
+               [matAutocomplete]="auto">
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="DataFusionStart($event.option.value)">
+          <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+            {{option}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <h1>{{text}}</h1>
+      <mat-form-field class="example-full-width selection" appearance="fill" *ngIf="selected == true">
+        <mat-label>Fehlercodes</mat-label>
+        <input type="text"
+               placeholder="Wähle einen Zeitraum"
+               aria-label="Fehlercodes"
+               matInput
+               [formControl]="myControl2"
+               [matAutocomplete]="auto2">
+        <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete" (optionSelected)="DataFusionEnd($event.option.value)">
+          <mat-option *ngFor="let option2 of filteredOptions2 | async" [value]="option2">
+            {{option2}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <button mat-raised-button (click)="createExcel()" *ngIf="selected3 == true">Excel</button>
+    </form>
+  </div>
+  <div class="chart">
+    <ngx-charts-bar-vertical
+    [view]="chartSize"
+    [results]="saleData"
+    [xAxisLabel]="'Janus'"
+    [legendTitle]="'Janus Relation (häufig->selten)'"
+    [yAxisLabel]="'Fehler / Bewegung Z1'"
+    [legend]="true"
+    [showXAxisLabel]="true"
+    [showYAxisLabel]="true"
+    [xAxis]="true"
+    [yAxis]="true"
+    [gradient]="false"
+    [showGridLines]="grid">
+</ngx-charts-bar-vertical>
+  </div>
+</div>

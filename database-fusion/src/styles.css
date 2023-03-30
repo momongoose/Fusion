@@ -1,0 +1,6 @@
+.main{
+  background-color: rgb(98, 182, 255);
+}
+
+html, body { height: max-content; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

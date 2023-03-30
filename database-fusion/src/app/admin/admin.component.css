@@ -1,0 +1,22 @@
+
+.con{
+  height: 95vh!important
+}
+
+mat-tab {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.upload {
+  height: 100px;
+  padding: 0;
+  margin: 0;
+}
+
+
+mat-tab-group{
+  height: 95vh!important;
+  }
+

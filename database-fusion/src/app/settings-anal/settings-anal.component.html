@@ -1,0 +1,356 @@
+<div class="con">
+  <div class="body">
+    <div class="ManipulateTime">
+      <mat-radio-group color="primary" [(ngModel)]="swap" class="radioBtns">
+        <mat-radio-button value="y">Mitarbeiter</mat-radio-button>
+        <mat-radio-button *ngIf="this.app.login == 8" value="x">Pausen</mat-radio-button>
+        <mat-radio-button *ngIf="this.app.login == 8" value="k">Kompetenzgruppen</mat-radio-button>
+        <mat-radio-button *ngIf="this.app.login == 8" value="z">Kompetenzen</mat-radio-button>
+        <mat-radio-button value="w">Wünsche</mat-radio-button>
+      </mat-radio-group>
+      <div class="headline" *ngIf="swap == 'x'">
+        <h1>Pausen-Einstellungen</h1>
+      </div>
+      <div class="headline" *ngIf="swap == 'k'">
+        <h1>Kompetenzgruppen-Einstellungen</h1>
+        <!--<h2>{{ clickedRow }} wurde ausgewählt</h2>-->
+      </div>
+      <div class="headline" *ngIf="swap == 'y'">
+        <h1>Mitarbeiter-Einstellungen</h1>
+      </div>
+      <div class="headline" *ngIf="swap == 'z'">
+        <h1>Kompetenzen-Einstellungen</h1>
+      </div>
+      <div class="headline" *ngIf="swap == 'w'">
+        <h1>Wünsche-Einstellungen</h1>
+      </div>
+      <div class="Gr" *ngIf="swap == 'k'">
+        <div class="inGroup">
+          <mat-form-field class="example-form-field inG">
+            <mat-label>Kompetenzgruppen</mat-label>
+            <input matInput type="text" placeholder="Kompetenzgruppe" [(ngModel)]="value" />
+            <button
+              *ngIf="value"
+              matSuffix
+              mat-icon-button
+              (click)="value = ''"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+        <div class="inGroup2">
+          <mat-form-field appearance="fill" class="inG2">
+              <mat-label>Kompetenzgruppen</mat-label>
+              <mat-select [(ngModel)]="value2">
+                <mat-option *ngFor="let group of groups" [value]="group.group_id">
+                  {{group.name}}
+                </mat-option>
+              </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="default-time-example tim" *ngIf="swap == 'x'">
+        <div class="in1">
+          <mat-form-field appearance="fill" class="remField">
+            <mat-label>Pausen-Zeiten</mat-label>
+            <mat-select [(value)]="ti">
+              <mat-option *ngFor="let tim of times" [value]="tim.value">
+                {{ tim.viewValue }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="in2">
+          <mat-form-field class="example-full-width addField">
+            <mat-label>Wähle eine Uhrzeit</mat-label>
+            <input
+              matInput
+              placeholder="..."
+              [ngxMatTimepicker]="picker"
+              [format]="24"
+              [(ngModel)]="time"
+            />
+            <ngx-mat-timepicker #picker></ngx-mat-timepicker>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="default-time-example tim" *ngIf="swap == 'z'">
+        <div class="in1">
+          <mat-form-field appearance="fill" class="roleField">
+            <mat-label>Rollen</mat-label>
+            <mat-select [(value)]="RoleValue">
+              <mat-option *ngFor="let role of roles" [value]="role.role_id">
+                <p *ngIf="role.type == 's'">{{ role.role }} Spätschicht</p>
+                <p *ngIf="role.type == 'n'">{{ role.role }} Nachtschicht</p>
+                <p *ngIf="role.type == 'f'">{{ role.role }} Frühschicht</p>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="in2">
+          <mat-form-field appearance="fill" class="inG2">
+              <mat-label>Kompetenzgruppen</mat-label>
+              <mat-select [(ngModel)]="value2">
+                <mat-option *ngFor="let group of groups" [value]="group.group_id">
+                  {{group.name}}
+                </mat-option>
+              </mat-select>
+          </mat-form-field>
+        </div>
+      <div class="btns" *ngIf="swap == 'z'">
+        <div class="update">
+          <button mat-raised-button (click)="updateRoleGroup()">Hinzufügen/Austauschen</button>
+        </div>
+      </div>
+      </div>
+      <div class="btns" *ngIf="swap == 'x'">
+        <div class="rem">
+          <button mat-raised-button (click)="delBreakTime()">Entfernen</button>
+        </div>
+        <div class="add">
+          <button mat-raised-button (click)="addBreakTime()">Hinzufügen</button>
+        </div>
+      </div>
+      <div class="btns" *ngIf="swap == 'k'">
+        <div class="add2">
+          <button mat-raised-button (click)="addGroup()">Hinzufügen</button>
+        </div>
+        <div class="rem2">
+          <button mat-raised-button (click)="remGroup()">Entfernen</button>
+        </div>
+      </div>
+      <div class="headline" *ngIf="swap == 'y' || swap =='w'">
+        <h2>{{ clickedRow }} wurde ausgewählt</h2>
+      </div>
+      <div class="Gr" *ngIf="swap == 'w'">
+        <div class="inGroup3">
+          <mat-form-field appearance="fill" class="inG2A">
+            <mat-label>Wunschposition</mat-label>
+            <mat-select [(ngModel)]="wishPos">
+              <mat-option *ngFor="let role of wishSet" [value]="role.role_id">
+                <p *ngIf="role.type == 's'">{{ role.role }} Spätschicht</p>
+                <p *ngIf="role.type == 'n'">{{ role.role }} Nachtschicht</p>
+                <p *ngIf="role.type == 'f'">{{ role.role }} Frühschicht</p>
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+        </div>
+        <div class="inGroup4">
+          <mat-form-field appearance="fill" class="inG3">
+            <mat-label>Wunschart</mat-label>
+            <mat-select [(ngModel)]="WishTypeValue">
+              <mat-option *ngFor="let type of tipes" [value]="type.type">
+                {{type.view}}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+        </div>
+      </div>
+      <div class="Gr" *ngIf="swap == 'y'">
+        <div class="inGroup3">
+          <mat-form-field appearance="fill" class="inG2">
+            <mat-label>Kompetenzgruppen</mat-label>
+            <mat-select [(ngModel)]="KompetenzValue">
+              <mat-option *ngFor="let group of groups" [value]="group.group_id">
+                {{group.name}}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+        </div>
+        <div class="inGroup4">
+          <mat-form-field appearance="fill" class="inG3">
+            <mat-label>Kompetenz</mat-label>
+            <mat-select [(ngModel)]="TypeValue">
+              <mat-option *ngFor="let type of types" [value]="type.type">
+                {{type.view}}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+        </div>
+      </div>
+      <div class="btns" *ngIf="swap == 'y'">
+        <div class="add3">
+          <button mat-raised-button (click)="addSkill()">Hinzufügen</button>
+        </div>
+        <div class="rem3">
+          <button mat-raised-button (click)="remSkill()">Entfernen</button>
+        </div>
+      </div>
+      <div class="btns" *ngIf="swap == 'w'">
+        <div class="add3">
+          <button mat-raised-button (click)="updateWish()">Hinzufügen</button>
+        </div>
+        <div class="rem3">
+          <button mat-raised-button (click)="remWish()">Entfernen</button>
+        </div>
+      </div>
+    </div>
+    <div class="table" *ngIf="swap != 'z' && swap != 'w'">
+      <div class="filter">
+        <mat-form-field class="in">
+          <input matInput (keyup)="applyFilter($event)" placeholder="Suche" />
+        </mat-form-field>
+      </div>
+      <div class="table2 example-container mat-elevation-z8">
+        <mat-table [dataSource]="dataSource" matSort>
+          <!-- Id Column -->
+          <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              ID
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.id }} </mat-cell>
+          </ng-container>
+
+          <!-- Name Column-->
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Name
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.name }} </mat-cell>
+          </ng-container>
+
+          <!-- Good Column -->
+          <ng-container matColumnDef="good">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Gut
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.good }} </mat-cell>
+          </ng-container>
+
+          <!-- OK Column -->
+          <ng-container matColumnDef="ok">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              OK
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.ok }} </mat-cell>
+          </ng-container>
+
+          <!-- No Column -->
+          <ng-container matColumnDef="no">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Nein
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.no }} </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row
+            (click)="setSelected(row)"
+            [class.demo-row-is-clicked]="clickedRows.has(row)"
+            *matRowDef="let row; columns: displayedColumns"
+          >
+          </mat-row>
+        </mat-table>
+
+        <mat-paginator [length]="this.app.MaSettingsAnalytik.length"  [pageSizeOptions]="[5, 10, 20, 100]"></mat-paginator>
+      </div>
+    </div>
+    <div class="table" *ngIf="swap == 'w'">
+      <div class="filter">
+        <mat-form-field class="in">
+          <input matInput (keyup)="applyFilter3($event)" placeholder="Suche" />
+        </mat-form-field>
+      </div>
+      <div class="table2 example-container mat-elevation-z8">
+        <mat-table [dataSource]="dataSource3" matSort>
+
+          <!-- Name Column-->
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Name
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.name }} </mat-cell>
+          </ng-container>
+
+          <!-- Good Column -->
+          <ng-container matColumnDef="good">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Gerne
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.good }} </mat-cell>
+          </ng-container>
+
+          <!-- OK Column -->
+          <ng-container matColumnDef="ok">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Ok
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.ok }} </mat-cell>
+          </ng-container>
+
+          <!-- No Column -->
+          <ng-container matColumnDef="no">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Gar Nicht
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.no }} </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns3"></mat-header-row>
+          <mat-row
+            (click)="setSelected(row)"
+            [class.demo-row-is-clicked]="clickedRows3.has(row)"
+            *matRowDef="let row; columns: displayedColumns3"
+          >
+          </mat-row>
+        </mat-table>
+
+        <mat-paginator [length]="this.app.MaSettingsAnalytik.length"  [pageSizeOptions]="[5, 10, 20, 100]"></mat-paginator>
+      </div>
+    </div>
+    <div class="table" *ngIf="swap == 'z'">
+      <div class="filter">
+        <mat-form-field class="in">
+          <input matInput (keyup)="applyFilter2($event)" placeholder="Suche" />
+        </mat-form-field>
+      </div>
+      <div class="table2 example-container mat-elevation-z8">
+        <mat-table [dataSource]="dataSource2" matSort>
+          <!-- Role Id Column -->
+          <ng-container matColumnDef="role_id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              ID
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.role_id }} </mat-cell>
+          </ng-container>
+
+          <!-- Type Column-->
+          <ng-container matColumnDef="type">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Schicht
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.type }} </mat-cell>
+          </ng-container>
+
+          <!-- Role Column -->
+          <ng-container matColumnDef="role">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Position
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.role }} </mat-cell>
+          </ng-container>
+
+          <!-- Group Column -->
+          <ng-container matColumnDef="group">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Kompetenzgruppe
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.group }} </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns2"></mat-header-row>
+          <mat-row
+            (click)="setSelected2(row)"
+            [class.demo-row-is-clicked]="clickedRows2.has(row)"
+            *matRowDef="let row; columns: displayedColumns2"
+          >
+          </mat-row>
+        </mat-table>
+
+        <mat-paginator [length]="this.app.roles.length" [pageSizeOptions]="[5, 10, 20, 100]"></mat-paginator>
+      </div>
+    </div>
+    <div></div>
+  </div>
+</div>

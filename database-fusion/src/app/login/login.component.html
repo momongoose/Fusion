@@ -1,0 +1,38 @@
+<div class="over">
+  <div class="con">
+    <h1>DATABASE FUSION</h1>
+    <div class="inputs">
+      <mat-form-field appearance="fill" class="pas">
+        <input
+          matInput
+          [type]="showPassword ? 'text' : 'password'"
+          name="password"
+          class="in"
+          [(ngModel)]="input"
+          (keypress)="keyPress($event)"
+        />
+        <mat-icon matSuffix (click)="togglePasswordVisibility()">
+          {{ showPassword ? "visibility_off" : "visibility" }}
+        </mat-icon>
+      </mat-form-field>
+    </div>
+    <!--<div class="link">
+      <a href="http://localhost:8080/auth" color="primary">
+        Sign in to Github
+      </a>
+    </div>-->
+    <div class="submit">
+      <button mat-raised-button color="primary" (click)="Submit()">
+        Submit
+      </button>
+    </div>
+  </div>
+</div>
+<div class="loadingCon" *ngIf="waiting">
+  <div class="loading">
+    <h1 class="loa">Loading</h1>
+    <div class="spin">
+      <mat-spinner [color]="'accent'"></mat-spinner>
+    </div>
+  </div>
+</div>

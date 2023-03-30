@@ -1,0 +1,40 @@
+<div class="con">
+  <mat-tab-group mat-align-tabs="center" animationDuration="0ms">
+    <mat-tab label="Errors">
+      <div class="checkis" >
+        <div class="check" *ngFor="let vas of Datas; let i=index;">
+          <input (change)="up()" type="checkbox" [(ngModel)]="vas.checked" name="vas{{i}}"> {{vas.name}}
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="Info">
+      <div class="log">
+      <mat-form-field appearance="standard" class="in">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="z.B.: LHIE123456789" #input>
+      </mat-form-field>
+      <button class="btn" (click)="check()" mat-raised-button>Neuladen</button>
+  <div class="mat-elevation-z8">
+    <table class="table" mat-table [dataSource]="dataSource" matSort>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Errors </th>
+        <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <!-- Row shown when there is no matching data. -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">Keine Daten treffen auf den Filter "{{input.value}}" zu</td>
+      </tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+  </div>
+</div>
+</mat-tab>
+  </mat-tab-group>
+</div>

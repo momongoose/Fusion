@@ -1,0 +1,157 @@
+.f1 {
+  background-color: aliceblue;
+  width: 32vw;
+  margin: auto;
+  border-radius: 50px;
+  text-align: center;
+}
+
+.ff1 {
+  width: 28vw;
+  text-align: center;
+  font-size: larger;
+}
+
+.ff6{
+  width: 18vw;
+  margin: auto;
+  text-align: center;
+  font-size: larger;
+  padding: 0 4vw 0 4vw;
+}
+
+.in{
+  margin: auto;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+}
+
+.select {
+  font-size: larger;
+  width: 80vw;
+  margin: auto;
+  padding-top: 2vh;
+  background-color: aliceblue;
+  display: inline-flex;
+  border-radius: 100px;
+  text-align: center;
+  padding-bottom: 9vh;
+}
+
+.h5 {
+  position: relative;
+  top: 3vh;
+}
+
+.add {
+position: relative;
+left: 12vw;
+}
+.rem {
+  position: relative;
+  left: -12vw;
+}
+
+.btn1:hover {
+  transition: ease-in-out 0.55s;
+  background-color: cornflowerblue;
+  color: white;
+}
+.btn1,
+.btn2 {
+  font-size: larger;
+}
+
+.btn2:hover  {
+  transition: ease-in-out 0.55s;
+  background-color: cornflowerblue;
+  color: white;
+}
+.s1{
+  margin: auto;
+  width: max-content;
+}
+
+.x {
+  position: relative;
+  top: 1vh;
+  padding-right: 2vw;
+  color: red;
+  font-size: 50px;
+}
+
+.datepicker {
+  display: inline-flex;
+  width: max-content;
+  margin: auto;
+  position: relative;
+  border-radius: 20px 20px 0px 0px;
+  background-color: cornflowerblue;
+  font-size: 20px;
+}
+
+.dl {
+  color: black;
+}
+
+.Ic {
+  color: black;
+}
+
+
+.j {
+  position: relative;
+  top: 1vh;
+  padding-right: 2vw;
+  color: rgb(27, 192, 27);
+  font-size: 50px;
+}
+
+.filter{
+  width: max-content;
+  margin: auto;
+}
+
+.in{
+  width: 80vw;
+  text-align: center;
+}
+
+.table{
+  width: 80vw;
+  text-align: center;
+  width: max-content;
+  margin: auto;
+}
+
+.scon {
+  width: max-content;
+  margin: auto;
+}
+
+.swap {
+margin-top: -8vh;
+text-align: center;
+margin-right: 5.5vw;
+}
+
+.con2{
+  text-align: center;
+  width: 100%;
+}
+
+mat-header-cell, mat-cell  {
+  justify-content: center;
+}
+
+.sbtn {
+  display: inline-flex;
+  font-size: larger;
+  transition: ease-in 0.45s;
+  border-width: 1px;
+}
+
+.bt{
+  height: max-content;
+  background-color: cornflowerblue;
+}

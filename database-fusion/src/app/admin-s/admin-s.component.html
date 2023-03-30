@@ -1,0 +1,388 @@
+<div class="con">
+  <div class="save">
+    <button mat-raised-button class="sbtn" (click)="submit()">
+      Einteilung Speichern
+    </button>
+    <mat-icon
+      *ngIf="send == true"
+      aria-hidden="true"
+      aria-label="Example home icon"
+      class="j"
+      >check</mat-icon
+    >
+      <mat-form-field class="example-full-width add" appearance="fill">
+        <mat-label>Mitarbeiter Hinzufügen</mat-label>
+        <input matInput placeholder="Name des Mitarbeiters" [(ngModel)]="name">
+      </mat-form-field>
+      <button mat-raised-button class="sbtn" (click)="Add()">
+       MA Hinzufügen
+      </button>
+      <mat-form-field class="example-full-width add" appearance="fill">
+        <mat-label>Rolle Hinzufügen</mat-label>
+        <input matInput placeholder="Name der Rolle" [(ngModel)]="rol">
+      </mat-form-field>
+      <button mat-raised-button class="sbtn" (click)="AddRole()">
+       Rolle Hinzufügen
+      </button>
+  </div>
+  <div class="dragNdrop" *ngFor="let pos of einteilung">
+    <div class="abc" *ngIf="pos.id.includes('Mitarbeiter') || pos.id.includes('Urlaub') || pos.id.includes('Krank') ">
+      <button (click)="updatePosLeft(pos.id.slice(0, -1))"><mat-icon>arrow_back</mat-icon></button>
+      <button (click)="Rename(pos.id)"><mat-icon>drive_file_rename_outline</mat-icon></button>
+      <button (click)="display(pos.id)"><mat-icon>palette</mat-icon></button>
+      <button (click)="remRole(pos.id.slice(0, -1))"><mat-icon>delete</mat-icon></button>
+      <button (click)="updatePosRight(pos.id.slice(0, -1))"><mat-icon>arrow_forward</mat-icon></button>
+      <h2>{{ pos.id.slice(0, -1) }}</h2>
+      <input type="text" [(ngModel)]="ren" *ngIf="pos.rename">
+      <button class="rename" (click)="subRename(pos.id.slice(0, -1))" *ngIf="pos.rename">Speichern</button>
+      <button (click)="changeColor('green', pos.id)" class="green" *ngIf="pos.display"> </button>
+      <button (click)="changeColor('turkey', pos.id)" class="turkey" *ngIf="pos.display"> </button>
+      <button (click)="changeColor('yellow', pos.id)" class="yellow" *ngIf="pos.display"> </button>
+      <button (click)="changeColor('orange', pos.id)" class="orange" *ngIf="pos.display"> </button>
+      <button (click)="changeColor('purple', pos.id)" class="purple" *ngIf="pos.display"> </button>
+      <button (click)="changeColor('grey', pos.id)" class="grey" *ngIf="pos.display"> </button>
+      <button (click)="changeColor('white', pos.id)" class="white" *ngIf="pos.display"> </button>
+      <button (click)="changeColor('', pos.id)" class="reset" *ngIf="pos.display"> </button>
+      <div
+        cdkDropList
+        id="{{ pos.id }}"
+        [cdkDropListData]="pos.list"
+        [cdkDropListConnectedTo]="connectedTo"
+        class="example-list"
+        (cdkDropListDropped)="drop($event)"
+        cdkDrag
+      >
+        <div
+          *ngFor="let item of pos.list"
+          [ngClass]="{
+            'break':item.break,
+            'example-box':item.state === undefined || !item.state.toLowerCase().includes('krank') &&
+            !item.state.toLowerCase().includes('urlaub') && !pos.id.includes('Urlaub') && !pos.id.includes('Krank'),
+            'Urlaub': item.state.toLowerCase().includes('urlaub') || pos.id.includes('Urlaub'),
+            'Krank': item.state.toLowerCase().includes('krank') || pos.id.includes('Krank'),
+            'Grün': pos.color == 'green',
+            'Türkis': pos.color == 'turkey',
+            'Gelb': pos.color == 'yellow',
+            'Orange': pos.color == 'orange',
+            'Lila': pos.color == 'purple',
+            'Grau': pos.color == 'grey',
+            'Weiß': pos.color == 'white'
+          }"
+          cdkDrag
+        >
+        <!--
+        <mat-radio-group (change)="change(item.name)" [(ngModel)]="selected" *ngIf="item.name != ''">
+          <mat-radio-button value="früh">F </mat-radio-button>
+          <mat-radio-button value="spät">S </mat-radio-button>
+        </mat-radio-group>-->
+          {{ item.name }} {{item.time}}<br>
+          <h4 *ngIf="item.state.includes('<')">({{item.state.substring(item.state.indexOf('<')+1, item.state.indexOf('>'))}})</h4>
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" *ngIf="item.name != ''">
+            <mat-icon>follow_the_signs</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item *ngFor="let time of breakTimes"  (click)="Break(time.value, item.name, item)">
+              <mat-icon>timer</mat-icon>
+              <span>{{time.value}}</span>
+            </button>
+            <button mat-menu-item (click)="Break('66:00', item.name, item)">
+              <mat-icon>auto_delete</mat-icon>
+              <span>Pause Entfernen</span>
+            </button>
+          </mat-menu>
+          <img style="height:30px" *ngIf="item.state.includes('pav16')" src = "../../assets/pic/16.png"/>
+          <svg style="width:24px;height:22px;color:#eeff00" viewBox="0 0 24 24" *ngIf="item.state.includes('früh')">
+            <path fill="currentColor" d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M9,7V17H11V13H14V11H11V9H15V7H9Z" />
+        </svg>
+        <svg style="width:24px;height:22px;color:#e1ffd0" viewBox="0 0 24 24" *ngIf="item.state.includes('spät')">
+          <path fill="currentColor" d="M11,7A2,2 0 0,0 9,9V11A2,2 0 0,0 11,13H13V15H9V17H13A2,2 0 0,0 15,15V13A2,2 0 0,0 13,11H11V9H15V7H11M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2Z" />
+      </svg>
+        </div>
+      </div>
+    </div>
+    <div class="def" *ngIf="pos.id.includes('Mitarbeiter') == false && pos.id.includes('Urlaub') == false && pos.id.includes('Krank') == false">
+      <button (click)="updatePosLeft(pos.id.slice(0, -1))"><mat-icon>arrow_back</mat-icon></button>
+      <button (click)="Rename(pos.id)"><mat-icon>drive_file_rename_outline</mat-icon></button>
+      <button (click)="display(pos.id)"><mat-icon>palette</mat-icon></button>
+      <button (click)="remRole(pos.id.slice(0, -1))"><mat-icon>delete</mat-icon></button>
+      <button (click)="updatePosRight(pos.id.slice(0, -1))"><mat-icon>arrow_forward</mat-icon></button>
+      <h2>{{ pos.id.slice(0, -1) }}</h2>
+      <input type="text" [(ngModel)]="ren" *ngIf="pos.rename">
+      <button class="rename" (click)="subRename(pos.id.slice(0, -1))" *ngIf="pos.rename">Speichern</button>
+      <button (click)="changeColor('green', pos.id)" class="green" *ngIf="pos.display"> </button>
+      <button (click)="changeColor('turkey', pos.id)" class="turkey" *ngIf="pos.display"> </button>
+      <button (click)="changeColor('yellow', pos.id)" class="yellow" *ngIf="pos.display"> </button>
+      <button (click)="changeColor('orange', pos.id)" class="orange" *ngIf="pos.display"> </button>
+      <button (click)="changeColor('purple', pos.id)" class="purple" *ngIf="pos.display"> </button>
+      <button (click)="changeColor('grey', pos.id)" class="grey" *ngIf="pos.display"> </button>
+      <button (click)="changeColor('white', pos.id)" class="white" *ngIf="pos.display"> </button>
+      <button (click)="changeColor('', pos.id)" class="reset" *ngIf="pos.display"> </button>
+      <div
+        cdkDropList
+        id="{{ pos.id }}"
+        [cdkDropListData]="pos.list"
+        [cdkDropListConnectedTo]="connectedTo"
+        class="example-list"
+        (cdkDropListDropped)="drop($event)"
+        cdkDrag
+      >
+        <div
+          *ngFor="let item of pos.list"
+          [ngClass]="{
+            'break':item.break,
+            'example-box':item.state === undefined || !item.state.toLowerCase().includes('krank') &&
+            !item.state.toLowerCase().includes('urlaub') && !pos.id.includes('Urlaub') && !pos.id.includes('Krank'),
+            'Urlaub': item.state.toLowerCase().includes('urlaub') || pos.id.includes('Urlaub'),
+            'Krank': item.state.toLowerCase().includes('krank') || pos.id.includes('Krank'),
+            'Grün': pos.color == 'green',
+            'Türkis': pos.color == 'turkey',
+            'Gelb': pos.color == 'yellow',
+            'Orange': pos.color == 'orange',
+            'Lila': pos.color == 'purple',
+            'Grau': pos.color == 'grey',
+            'Weiß': pos.color == 'white'
+          }"
+          cdkDrag
+        >
+        <!--
+        <mat-radio-group (change)="change(item.name)" [(ngModel)]="selected" *ngIf="item.name != ''">
+          <mat-radio-button value="früh">F </mat-radio-button>
+          <mat-radio-button value="spät">S </mat-radio-button>
+        </mat-radio-group>-->
+          {{ item.name }} {{item.time}}<br>
+          <img style="height:30px" *ngIf="isUndefined(Json[pos.group]) == false && Json[pos.group].good.includes(item.name) && Json[pos.group].wish.includes(item.name + '|' + pos.id.slice(0, -1))" src = "../../assets/pic/GrünGrün.png"/>
+          <img style="height:30px" *ngIf="isUndefined(Json[pos.group]) == false && Json[pos.group].ok.includes(item.name) && Json[pos.group].wish.includes(item.name + '|' + pos.id.slice(0, -1)) == false" src = "../../assets/pic/GelbRot.png"/>
+          <img style="height:30px" *ngIf="isUndefined(Json[pos.group]) == false && Json[pos.group].no.includes(item.name) && Json[pos.group].wish.includes(item.name + '|' + pos.id.slice(0, -1)) == false" src = "../../assets/pic/RotRot.png"/>
+          <img style="height:30px" *ngIf="isUndefined(Json[pos.group]) == false && Json[pos.group].good.includes(item.name) && Json[pos.group].wish.includes(item.name + '|' + pos.id.slice(0, -1)) == false" src = "../../assets/pic/GrünRot.png"/>
+          <img style="height:30px" *ngIf="isUndefined(Json[pos.group]) == false && Json[pos.group].ok.includes(item.name) && Json[pos.group].wish.includes(item.name + '|' + pos.id.slice(0, -1))" src = "../../assets/pic/GelbGrün.png"/>
+          <img style="height:30px" *ngIf="isUndefined(Json[pos.group]) == false && Json[pos.group].no.includes(item.name) && Json[pos.group].wish.includes(item.name + '|' + pos.id.slice(0, -1))" src = "../../assets/pic/RotGrün.png"/>
+          <!--<img style="height:30px" *ngIf="item.name != '' && isUndefined(Json[pos.group]) == false && Json[pos.group].good.includes(item.name) == false && Json[pos.group].ok.includes(item.name) == false && Json[pos.group].no.includes(item.name) == false && Json[pos.group].wish.includes(pos.id.slice(0, -1)) == false" src = "../../assets/pic/WeißRot.png"/>
+          <img style="height:30px" *ngIf="item.name != '' && isUndefined(Json[pos.group]) == false && Json[pos.group].good.includes(item.name) == false && Json[pos.group].ok.includes(item.name) == false && Json[pos.group].no.includes(item.name) == false && Json[pos.group].wish.includes(pos.id.slice(0, -1))" src = "../../assets/pic/WeißGrün.png"/>-->
+          <h4 *ngIf="item.state.includes('<')">({{item.state.substring(item.state.indexOf('<')+1, item.state.indexOf('>'))}})</h4>
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" *ngIf="item.name != ''">
+            <mat-icon>follow_the_signs</mat-icon>
+          </button>
+          <button (click)="deletePerson(item.name)" mat-icon-button *ngIf="item.name != ''">
+            <mat-icon>delete_forever</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item *ngFor="let time of breakTimes"  (click)="Break(time.value, item.name, item)">
+              <mat-icon>timer</mat-icon>
+              <span>{{time.value}}</span>
+            </button>
+            <button mat-menu-item (click)="Break('66:00', item.name, item)">
+              <mat-icon>auto_delete</mat-icon>
+              <span>Pause Entfernen</span>
+            </button>
+          </mat-menu>
+          <img style="height:30px" *ngIf="item.state.includes('pav16')" src = "../../assets/pic/16.png"/>
+          <svg style="width:24px;height:22px;color:#eeff00" viewBox="0 0 24 24" *ngIf="item.state.includes('früh')">
+            <path fill="currentColor" d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M9,7V17H11V13H14V11H11V9H15V7H9Z" />
+        </svg>
+        <svg style="width:24px;height:22px;color:#e1ffd0" viewBox="0 0 24 24" *ngIf="item.state.includes('spät')">
+          <path fill="currentColor" d="M11,7A2,2 0 0,0 9,9V11A2,2 0 0,0 11,13H13V15H9V17H13A2,2 0 0,0 15,15V13A2,2 0 0,0 13,11H11V9H15V7H11M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2Z" />
+      </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="loadingCon" *ngIf="waiting">
+  <div class="loading">
+    <h1 class="loa">Loading</h1>
+    <div class="spin">
+      <mat-spinner [color]="'accent'"></mat-spinner>
+    </div>
+  </div>
+</div>
+<div class="loadingCon" *ngIf="del">
+  <div class="dCon">
+    <div class="delCon">
+      <h1>Bist du sicher, dass du {{delRole}} Löschen willst?</h1>
+      <div class="delBtn">
+        <div class="dbtn10">
+          <button mat-raised-button [color]="'primary'" class="dbtn1" (click)="delCancel()">Abbrechen</button>
+        </div>
+        <div class="dbtn20">
+          <button mat-raised-button [color]="'primary'" class="dbtn2" (click)="removeRole()">Löschen</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="loadingCon" *ngIf="del2">
+  <div class="dCon">
+    <div class="delCon">
+      <h1>Bist du sicher, dass du {{delPerson}} Löschen willst?</h1>
+      <div class="delBtn">
+        <div class="dbtn10">
+          <button mat-raised-button [color]="'primary'" class="dbtn1" (click)="delCancel2()">Abbrechen</button>
+        </div>
+        <div class="dbtn20">
+          <button mat-raised-button [color]="'primary'" class="dbtn2" (click)="removePerson()">Löschen</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--
+    <div class="con">
+  <h1>Einteilen</h1>
+  <div class="zuteilen">
+    <mat-form-field appearance="fill">
+      <mat-label style="color: white">Personen</mat-label>
+      <input
+        type="text"
+        placeholder="type a number"
+        aria-label="Number"
+        style="color: white"
+        matInput
+        [formControl]="myControl"
+        [matAutocomplete]="auto"
+      />
+      <mat-autocomplete
+        autoActiveFirstOption
+        #auto="matAutocomplete"
+        (optionSelected)="setValueA($event.option.value)"
+      >
+        <mat-option
+          *ngFor="let option of filteredOptions | async"
+          [value]="option"
+        >
+          {{ option }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-card class="add"
+      >How often the Selected Person was on every Position</mat-card
+    >
+    <mat-form-field appearance="fill">
+      <mat-label style="color: white">Einteilung</mat-label>
+      <input
+        type="text"
+        placeholder="type a number"
+        aria-label="Number"
+        style="color: white"
+        matInput
+        [formControl]="myControl2"
+        [matAutocomplete]="auto"
+      />
+      <mat-autocomplete
+        autoActiveFirstOption
+        #auto="matAutocomplete"
+        (optionSelected)="Add($event.option.value)"
+      >
+        <mat-option
+          *ngFor="let option of filteredOptions2 | async"
+          [value]="option"
+        >
+          {{ option }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+  <h1>Entfernen</h1>
+  <div class="entfernen">
+    <mat-form-field appearance="fill">
+      <mat-label style="color: white">Personen</mat-label>
+      <input
+        type="text"
+        placeholder="type a number"
+        aria-label="Number"
+        style="color: white"
+        matInput
+        [formControl]="myControl3"
+        [matAutocomplete]="auto"
+      />
+      <mat-autocomplete
+        autoActiveFirstOption
+        #auto="matAutocomplete"
+        (optionSelected)="setValueB($event.option.value)"
+      >
+        <mat-option
+          *ngFor="let option of filteredOptions3 | async"
+          [value]="option"
+        >
+          {{ option }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-card class="rem"
+      >How often the Selected Person was on every Position</mat-card
+    >
+    <mat-form-field appearance="fill">
+      <mat-label style="color: white">Einteilung</mat-label>
+      <input
+        type="text"
+        placeholder="type a number"
+        aria-label="Number"
+        style="color: white"
+        matInput
+        [formControl]="myControl4"
+        [matAutocomplete]="auto"
+      />
+      <mat-autocomplete
+        autoActiveFirstOption
+        #auto="matAutocomplete"
+        (optionSelected)="Remove($event.option.value)"
+      >
+        <mat-option
+          *ngFor="let option of filteredOptions4 | async"
+          [value]="option"
+        >
+          {{ option }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+  <div class="btns">
+    <button (click)="LoadData()">Save</button>
+  </div>
+  <div class="filter">
+    <mat-form-field class="in">
+      <input matInput (keyup)="applyFilter($event)" placeholder="Filter">
+    </mat-form-field>
+  </div>
+  <div class="table example-container mat-elevation-z8">
+
+    <mat-table [dataSource]="dataSource" matSort>
+      -->
+<!-- Position1 Column
+      <ng-container matColumnDef="pos1">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Position1 </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.pos1}} </mat-cell>
+      </ng-container>
+
+      //Position2 Column
+      <ng-container matColumnDef="pos2">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Position2 </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.pos2}} </mat-cell>
+      </ng-container>
+
+      //Position3 Column
+      <ng-container matColumnDef="pos3">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Position3 </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.pos3}} </mat-cell>
+      </ng-container>
+
+      //Position4 Column
+      <ng-container matColumnDef="pos4">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Position4 </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.pos4}} </mat-cell>
+      </ng-container>
+
+      //Position5 Column
+      <ng-container matColumnDef="pos5">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Position5 </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.pos5}} </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;">
+      </mat-row>
+    </mat-table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  </div>
+  </div>
+  -->

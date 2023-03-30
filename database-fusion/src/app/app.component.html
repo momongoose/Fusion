@@ -1,0 +1,51 @@
+<!-- in here I have the navigation bar and its links linked up to the routing, I also have the router outlet in here -->
+
+  <nav class="navbar" *ngIf="display == false">
+    <ul class="navbar-nav mr-auto menuItems" routerLinkActive="active">
+      <li class="nav-item0">
+      <a href="" class="nav-link pool" routerLink="" data-item="Start">Start</a>
+    </li>
+      <li class="nav-item1" *ngIf="login == '1' || login == '2' || login == '3'"> <!-- *ngIf="login"-->
+        <a href="/error" data-item="ErrorCheck" class="nav-link" routerLink="error">ErrorCheck</a>
+      </li>
+      <li class="nav-item2" *ngIf="login == '2' || login == '3'"> <!-- *ngIf="showAdminBoard"-->
+        <a href="/stats" data-item="Statistiken" class="nav-link" routerLink="stats">Statistiken</a>
+      </li>
+      <li class="nav-item3" *ngIf="login == '1' || login == '2' || login == '3'"> <!-- *ngIf="showAdminBoard"-->
+        <a href="/display" data-item="Anzeige" class="nav-link" routerLink="display">Anzeige</a>
+      </li>
+      <li class="nav-item4" *ngIf="login == '3'"> <!-- *ngIf="showAdminBoard"-->
+        <a href="/admin" data-item="Einteilung" class="nav-link" routerLink="admin">Einteilung</a>
+      </li>
+      <li class="nav-item3" *ngIf="login == '4' || login == '6'  || login == '8'"> <!-- *ngIf="showAdminBoard"-->
+        <a href="/displayAnalytik" data-item="AnzeigeAnalytik" class="nav-link" routerLink="displayAnalytik">Anzeige</a>
+      </li>
+      <li class="nav-item4" *ngIf="login == '4' || login == '8'"> <!-- *ngIf="showAdminBoard"-->
+        <a href="/adminAnalytik" data-item="EinteilungAnalytik" class="nav-link" routerLink="adminAnalytik">Einteilung</a>
+      </li>
+      <li class="nav-item3" *ngIf="login == '5'  || login == '7'"> <!-- *ngIf="showAdminBoard"-->
+        <a href="/displayPraeanalytik" data-item="AnzeigePraeanalytik" class="nav-link" routerLink="displayPraeanalytik">Anzeige</a>
+      </li>
+      <li class="nav-item4" *ngIf="login == '5'"> <!-- *ngIf="showAdminBoard"-->
+        <a href="/adminPraeanalytik" data-item="EinteilungPraeanalytik" class="nav-link" routerLink="adminPraeanalytik">Einteilung</a>
+      </li>
+      <li class="nav-item5" *ngIf="login == '3'"> <!-- *ngIf="showAdminBoard"-->
+        <a href="/statsPooling" data-item="StatistikenPooling" class="nav-link" routerLink="statsPooling">Statistiken</a>
+      </li>
+      <li class="nav-item5" *ngIf="login == '4' || login == '8'"> <!-- *ngIf="showAdminBoard"-->
+        <a href="/statsAnalytik" data-item="StatistikenAnalytik" class="nav-link" routerLink="statsAnalytik">Statistiken</a>
+      </li>
+      <li class="nav-item5" *ngIf="login == '5'"> <!-- *ngIf="showAdminBoard"-->
+        <a href="/statsPraeanalytik" data-item="StatistikenPraeanalytik" class="nav-link" routerLink="statsPraeanalytik">Statistiken</a>
+      </li>
+      <li class="nav-item5" *ngIf="!login">
+        <a href="/login" data-item="Anmeldung" class="nav-link" routerLink="login"
+          >Anmeldung</a
+        >
+      </li>
+    </ul>
+  </nav>
+
+  <body class="container">
+    <router-outlet></router-outlet>
+  </body>

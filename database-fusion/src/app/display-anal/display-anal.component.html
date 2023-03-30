@@ -1,0 +1,236 @@
+<div class="clock-container clock2">
+  <div class="time">{{this.date3}}</div>
+</div>
+<div class="con" *ngIf="over == 0" style="height: 100vh;">
+  <h1 class="date">
+    {{ date }}
+  </h1>
+  <mat-tab-group
+    mat-align-tabs="center"
+    class="group"
+    [selectedIndex]="selectedIndex"
+  >
+    <mat-tab label=""
+      ><div class="conFhead">
+        <h1>Frühschicht</h1>
+      </div>
+      <div class="conF">
+        <div class="dragNdrop" *ngFor="let pos of einteilungF">
+          <h2>{{ pos.id.slice(0, -1) }}</h2>
+          <div class="example-list">
+            <div
+              *ngFor="let item of pos.list"
+              [ngClass]="{
+                'break':item.break,
+                'example-box':item.state === undefined || !item.state.toLowerCase().includes('krank') &&
+          !item.state.toLowerCase().includes('urlaub'),
+          'Urlaub': item.state.toLowerCase().includes('urlaub'),
+          'Krank': item.state.toLowerCase().includes('krank'),
+          'Grün': pos.color == 'green',
+          'Türkis': pos.color == 'turkey',
+          'Gelb': pos.color == 'yellow',
+          'Orange': pos.color == 'orange',
+          'Lila': pos.color == 'purple',
+          'Grau': pos.color == 'grey',
+          'Weiß': pos.color == 'white'
+              }"
+            >
+            {{ item.name }} {{item.time}}
+			<img style="height:24px" *ngIf="Json.good.includes(item.name)" src = "../../assets/pic/greenF.png"/>
+            <img style="height:24px" *ngIf="Json.ok.includes(item.name)" src = "../../assets/pic/yellowF.png"/>
+            <img style="height:24px" *ngIf="Json.no.includes(item.name)" src = "../../assets/pic/redF.png"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="">
+      <div class="conShead">
+        <h1>Spätschicht</h1>
+      </div>
+      <div class="conS">
+        <div class="dragNdrop" *ngFor="let pos of einteilungS">
+          <h2>{{ pos.id.slice(0, -1) }}</h2>
+          <div class="example-list">
+            <div
+              *ngFor="let item of pos.list"
+              [ngClass]="{
+                'break':item.break,
+                'example-box':item.state === undefined || !item.state.toLowerCase().includes('krank') &&
+          !item.state.toLowerCase().includes('urlaub'),
+          'Urlaub': item.state.toLowerCase().includes('urlaub'),
+          'Krank': item.state.toLowerCase().includes('krank'),
+          'Grün': pos.color == 'green',
+          'Türkis': pos.color == 'turkey',
+          'Gelb': pos.color == 'yellow',
+          'Orange': pos.color == 'orange',
+          'Lila': pos.color == 'purple',
+          'Grau': pos.color == 'grey',
+          'Weiß': pos.color == 'white'
+              }"
+            >
+              {{ item.name }} {{item.time}}
+			  <img style="height:24px" *ngIf="Json.good.includes(item.name)" src = "../../assets/pic/greenF.png"/>
+              <img style="height:24px" *ngIf="Json.ok.includes(item.name)" src = "../../assets/pic/yellowF.png"/>
+              <img style="height:24px" *ngIf="Json.no.includes(item.name)" src = "../../assets/pic/redF.png"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label=""
+      ><div class="conNhead">
+        <h1>Nachtschicht</h1>
+      </div>
+      <div class="conN">
+        <div class="dragNdrop" *ngFor="let pos of einteilungN">
+          <h2>{{ pos.id.slice(0, -1) }}</h2>
+          <div class="example-list">
+            <div
+              *ngFor="let item of pos.list"
+              [ngClass]="{
+                'break':item.break,
+                'example-box':item.state === undefined || !item.state.toLowerCase().includes('krank') &&
+          !item.state.toLowerCase().includes('urlaub') && !pos.id.includes('Urlaub') && !pos.id.includes('Krank'),
+          'Urlaub': item.state.toLowerCase().includes('urlaub') || pos.id.includes('Urlaub'),
+          'Krank': item.state.toLowerCase().includes('krank') || pos.id.includes('Krank'),
+          'Grün': pos.color == 'green',
+          'Türkis': pos.color == 'turkey',
+          'Gelb': pos.color == 'yellow',
+          'Orange': pos.color == 'orange',
+          'Lila': pos.color == 'purple',
+          'Grau': pos.color == 'grey',
+          'Weiß': pos.color == 'white'
+              }"
+            >
+              {{ item.name }} {{item.time}}
+			  <img style="height:24px" *ngIf="Json.good.includes(item.name)" src = "../../assets/pic/greenF.png"/>
+              <img style="height:24px" *ngIf="Json.ok.includes(item.name)" src = "../../assets/pic/yellowF.png"/>
+              <img style="height:24px" *ngIf="Json.no.includes(item.name)" src = "../../assets/pic/redF.png"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>
+
+<div class="con" *ngIf="over == 1" style="height: 100vh;">
+  <h1 class="date">
+    {{ date }}
+  </h1>
+  <mat-tab-group
+    mat-align-tabs="center"
+    class="group"
+    [selectedIndex]="selectedIndex"
+  >
+    <mat-tab label=""
+      ><div class="conFhead">
+        <h1>Nachtschicht & Frühschicht</h1>
+      </div>
+      <div class="conF">
+        <div class="dragNdrop" *ngFor="let pos of einteilungNF">
+          <h2>{{ pos.id.slice(0, -1) }}</h2>
+          <div class="example-list">
+            <div
+              *ngFor="let item of pos.list"
+              [ngClass]="{
+                'break':item.break,
+                'example-box':item.state === undefined || !item.state.toLowerCase().includes('krank') &&
+          !item.state.toLowerCase().includes('urlaub'),
+          'Urlaub': item.state.toLowerCase().includes('urlaub'),
+          'Krank': item.state.toLowerCase().includes('krank'),
+          'Grün': pos.color == 'green',
+          'Türkis': pos.color == 'turkey',
+          'Gelb': pos.color == 'yellow',
+          'Orange': pos.color == 'orange',
+          'Lila': pos.color == 'purple',
+          'Grau': pos.color == 'grey',
+          'Weiß': pos.color == 'white'
+              }"
+            >
+            {{ item.name }} {{item.time}}
+            <img style="width:24px;" src = "../../assets/pic/F.png" *ngIf="item.state.includes('früh')"/>
+            <img style="width:24px;" src = "../../assets/pic/N.png" *ngIf="item.state.includes('nacht')"/>
+			<img style="height:24px" *ngIf="Json.good.includes(item.name)" src = "../../assets/pic/greenF.png"/>
+            <img style="height:24px" *ngIf="Json.ok.includes(item.name)" src = "../../assets/pic/yellowF.png"/>
+            <img style="height:24px" *ngIf="Json.no.includes(item.name)" src = "../../assets/pic/redF.png"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="">
+      <div class="conShead">
+        <h1>Frühschicht & Spätschicht</h1>
+      </div>
+      <div class="conS">
+        <div class="dragNdrop" *ngFor="let pos of einteilungFS">
+          <h2>{{ pos.id.slice(0, -1) }}</h2>
+          <div class="example-list">
+            <div
+              *ngFor="let item of pos.list"
+              [ngClass]="{
+                'break':item.break,
+                'example-box':item.state === undefined || !item.state.toLowerCase().includes('krank') &&
+          !item.state.toLowerCase().includes('urlaub'),
+          'Urlaub': item.state.toLowerCase().includes('urlaub'),
+          'Krank': item.state.toLowerCase().includes('krank'),
+          'Grün': pos.color == 'green',
+          'Türkis': pos.color == 'turkey',
+          'Gelb': pos.color == 'yellow',
+          'Orange': pos.color == 'orange',
+          'Lila': pos.color == 'purple',
+          'Grau': pos.color == 'grey',
+          'Weiß': pos.color == 'white'
+              }"
+            >
+              {{ item.name }} {{item.time}}
+              <img style="width:24px;" src = "../../assets/pic/F.png" *ngIf="item.state.includes('früh')"/>
+              <img style="width:24px;" src = "../../assets/pic/S.png" *ngIf="item.state.includes('spät')"/>
+			  <img style="height:24px" *ngIf="Json.good.includes(item.name)" src = "../../assets/pic/greenF.png"/>
+              <img style="height:24px" *ngIf="Json.ok.includes(item.name)" src = "../../assets/pic/yellowF.png"/>
+              <img style="height:24px" *ngIf="Json.no.includes(item.name)" src = "../../assets/pic/redF.png"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label=""
+      ><div class="conNhead">
+        <h1>Spätschicht & Nachtschicht</h1>
+      </div>
+      <div class="conN">
+        <div class="dragNdrop" *ngFor="let pos of einteilungSN">
+          <h2>{{ pos.id.slice(0, -1) }}</h2>
+          <div class="example-list">
+            <div
+              *ngFor="let item of pos.list"
+              [ngClass]="{
+                'break':item.break,
+                'example-box':item.state === undefined || !item.state.toLowerCase().includes('krank') &&
+          !item.state.toLowerCase().includes('urlaub') && !pos.id.includes('Urlaub') && !pos.id.includes('Krank'),
+          'Urlaub': item.state.toLowerCase().includes('urlaub') || pos.id.includes('Urlaub'),
+          'Krank': item.state.toLowerCase().includes('krank') || pos.id.includes('Krank'),
+          'Grün': pos.color == 'green',
+          'Türkis': pos.color == 'turkey',
+          'Gelb': pos.color == 'yellow',
+          'Orange': pos.color == 'orange',
+          'Lila': pos.color == 'purple',
+          'Grau': pos.color == 'grey',
+          'Weiß': pos.color == 'white'
+              }"
+            >
+              {{ item.name }} {{item.time}}
+              <img style="width:24px;" src = "../../assets/pic/S.png" *ngIf="item.state.includes('spät')"/>
+              <img style="width:24px;" src = "../../assets/pic/N.png" *ngIf="item.state.includes('nacht')"/>
+			        <img style="height:24px" *ngIf="Json.good.includes(item.name)" src = "../../assets/pic/greenF.png"/>
+              <img style="height:24px" *ngIf="Json.ok.includes(item.name)" src = "../../assets/pic/yellowF.png"/>
+              <img style="height:24px" *ngIf="Json.no.includes(item.name)" src = "../../assets/pic/redF.png"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

@@ -1,0 +1,38 @@
+<div class="con">
+  <h1 class="date">
+    {{ date }}
+
+  </h1>
+      <div class="conShead">
+        <h1> </h1>
+      </div>
+      <div class="conS">
+        <div class="dragNdrop" *ngFor="let pos of einteilungS">
+          <h2>{{ pos.id.slice(0, -1) }}</h2>
+          <div class="example-list">
+            <div
+              *ngFor="let item of pos.list"
+              [ngClass]="{
+                'break':item.break,
+                'example-box':item.state === undefined || !item.state.toLowerCase().includes('krank') &&
+          !item.state.toLowerCase().includes('urlaub'),
+          'Urlaub': item.state.toLowerCase().includes('urlaub'),
+          'Krank': item.state.toLowerCase().includes('krank'),
+          'Grün': pos.color == 'green',
+          'Türkis': pos.color == 'turkey',
+          'Gelb': pos.color == 'yellow',
+          'Orange': pos.color == 'orange',
+          'Lila': pos.color == 'purple',
+          'Grau': pos.color == 'grey',
+          'Weiß': pos.color == 'white'
+              }"
+            >
+            {{ item.start }}{{ item.ende }}<br>{{ item.name }} {{item.time}}
+            <img style="height:24px" *ngIf="Json.good.includes(item.name)" src = "../../assets/pic/greenF.png"/>
+            <img style="height:24px" *ngIf="Json.ok.includes(item.name)" src = "../../assets/pic/yellowF.png"/>
+            <img style="height:24px" *ngIf="Json.no.includes(item.name)" src = "../../assets/pic/redF.png"/>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
