@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ErrorService } from './services/error.service';
 import { EinteilungService } from './services/einteilung.service';
-import { EinteilungAnalService } from './services/einteilung-anal.service';
+import { EinteilungAnalytikService } from './services/einteilung-analytik.service';
 import { EinteilungPraeService } from './services/einteilung-prae.service';
 
 @Component({
@@ -14,7 +14,7 @@ export class AppComponent {
   constructor(
     private error: ErrorService,
     private ein: EinteilungService,
-    private einAnal: EinteilungAnalService,
+    private einAnalytik: EinteilungAnalytikService,
     private einPrae: EinteilungPraeService
   ) {
     this.display = false;
@@ -90,7 +90,7 @@ export class AppComponent {
   }
   async getStatsAnal() {
     this.Stats = await new Promise((resolve) => {
-      this.einAnal.getStats().subscribe(async (data: any) => {
+      this.einAnalytik.getStats().subscribe(async (data: any) => {
         resolve(await data);
       });
     }).catch(() => {
@@ -287,7 +287,7 @@ export class AppComponent {
         break;
       case 8:
       case 4:
-        this.einAnal.getSet(setting, 'analytik').subscribe(async (data) => {
+        this.einAnalytik.getSet(setting, 'analytik').subscribe(async (data) => {
           this.settingsAnalytik = await data.text;
         });
         break;
@@ -330,28 +330,28 @@ export class AppComponent {
       case 8:
       case 4:
         this.MaSettingsAnalytik = await new Promise((resolve) => {
-          this.einAnal.getMaSettings().subscribe(async (data: any) => {
+          this.einAnalytik.getMaSettings().subscribe(async (data: any) => {
             resolve(await data);
           });
         }).catch(() => {
           console.log('could not get Analytik MA Settings! ');
         });
         this.AnalytikGroups = await new Promise((resolve) => {
-          this.einAnal.getGroups().subscribe(async (data: any) => {
+          this.einAnalytik.getGroups().subscribe(async (data: any) => {
             resolve(await data);
           });
         }).catch(() => {
           console.log('could not get Analytik Groups! ');
         });
         this.AnalytikSkills = await new Promise((resolve) => {
-          this.einAnal.getSkills().subscribe(async (data: any) => {
+          this.einAnalytik.getSkills().subscribe(async (data: any) => {
             resolve(await data);
           });
         }).catch(() => {
           console.log('could not get Analytik Skills! ');
         });
         this.AnalytikWish = await new Promise((resolve) => {
-          this.einAnal.getWish().subscribe(async (data: any) => {
+          this.einAnalytik.getWish().subscribe(async (data: any) => {
             resolve(await data);
           });
         }).catch(() => {
@@ -408,7 +408,7 @@ export class AppComponent {
 
   async getRolesAnal() {
     this.roles = await new Promise((resolve) => {
-      this.einAnal.getRoles().subscribe(async (data: any) => {
+      this.einAnalytik.getRoles().subscribe(async (data: any) => {
         resolve(await data);
       });
     }).catch(() => {
@@ -450,21 +450,21 @@ export class AppComponent {
     this.connectedToN = [...this.connectedToN];
   }
 
-  async getEinAnal(date: any) {
-    this.einAnal.getEinteilung(date).subscribe(async (data) => {
+  async getEinAnalytik(date: any) {
+    this.einAnalytik.getEinteilung(date).subscribe(async (data) => {
       this.exist = data.exist;
       this.einteilung = data.text;
       if (this.exist == false) {
         this.früh = [];
         this.spät = [];
         this.nacht = [];
-        this.einAnal.getF(date).subscribe(async (data) => {
+        this.einAnalytik.getF(date).subscribe(async (data) => {
           this.früh = await data;
         });
-        this.einAnal.getS(date).subscribe(async (data) => {
+        this.einAnalytik.getS(date).subscribe(async (data) => {
           this.spät = await data;
         });
-        this.einAnal.getN(date).subscribe(async (data) => {
+        this.einAnalytik.getN(date).subscribe(async (data) => {
           this.nacht = await data;
         });
       } else {
@@ -506,7 +506,7 @@ export class AppComponent {
                   new Date().getTime() > HalfHour &&
                   this.einteilung[i].break !== '66:00:00'
                 ) {
-                  this.einAnal
+                  this.einAnalytik
                     .updateBreak(
                       this.einteilung[i].name,
                       this.einteilung[i].date,
@@ -581,7 +581,7 @@ export class AppComponent {
                   new Date().getTime() > HalfHour &&
                   this.einteilung[i].break !== '66:00:00'
                 ) {
-                  this.einAnal
+                  this.einAnalytik
                     .updateBreak(
                       this.einteilung[i].name,
                       this.einteilung[i].date,
@@ -656,7 +656,7 @@ export class AppComponent {
                   new Date().getTime() > HalfHour &&
                   this.einteilung[i].break !== '66:00:00'
                 ) {
-                  this.einAnal
+                  this.einAnalytik
                     .updateBreak(
                       this.einteilung[i].name,
                       this.einteilung[i].date,
@@ -718,17 +718,17 @@ export class AppComponent {
           }
         }
         if (countf == 0) {
-          this.einAnal.getF(date).subscribe(async (data) => {
+          this.einAnalytik.getF(date).subscribe(async (data) => {
             this.früh = await data;
           });
         }
         if (counts == 0) {
-          this.einAnal.getS(date).subscribe(async (data) => {
+          this.einAnalytik.getS(date).subscribe(async (data) => {
             this.spät = await data;
           });
         }
         if (countn == 0) {
-          this.einAnal.getN(date).subscribe(async (data) => {
+          this.einAnalytik.getN(date).subscribe(async (data) => {
             this.nacht = await data;
           });
         }

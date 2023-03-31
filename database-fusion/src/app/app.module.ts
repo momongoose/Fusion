@@ -45,22 +45,22 @@ import {MatRadioModule} from '@angular/material/radio';
 import { SettingsComponent } from './settings/settings.component';
 import {NgxMatTimepickerModule} from 'ngx-mat-timepicker';
 import {MatMenuModule} from '@angular/material/menu';
-import { AdminAnalComponent } from './admin-anal/admin-anal.component';
+import { AdminAnalytikComponent } from './admin-analytik/admin-analytik.component';
 import { AdminPraeComponent } from './admin-prae/admin-prae.component';
-import { AdminFAnalComponent } from './admin-f-anal/admin-f-anal.component';
+import { AdminFAnalytikComponent } from './admin-f-analytik/admin-f-analytik.component';
 import { AdminFPraeComponent } from './admin-f-prae/admin-f-prae.component';
 import { AdminSPraeComponent } from './admin-s-prae/admin-s-prae.component';
-import { AdminSAnalComponent } from './admin-s-anal/admin-s-anal.component';
-import { AdminNAnalComponent } from './admin-n-anal/admin-n-anal.component';
+import { AdminSAnalytikComponent } from './admin-s-analytik/admin-s-analytik.component';
+import { AdminNAnalytikComponent } from './admin-n-analytik/admin-n-analytik.component';
 import { AdminNPraeComponent } from './admin-n-prae/admin-n-prae.component';
-import { DisplayAnalComponent } from './display-anal/display-anal.component';
+import { DisplayAnalytikComponent } from './display-analytik/display-analytik.component';
 import { DisplayPraeComponent } from './display-prae/display-prae.component';
-import { PositionAnalComponent } from './position-anal/position-anal.component';
+import { PositionAnalytikComponent } from './position-analytik/position-analytik.component';
 import { PositionPraeComponent } from './position-prae/position-prae.component';
-import { SettingsAnalComponent } from './settings-anal/settings-anal.component';
+import { SettingsAnalytikComponent } from './settings-analytik/settings-analytik.component';
 import { SettingsPraeComponent } from './settings-prae/settings-prae.component';
 import { StatsComponent } from './stats/stats.component';
-import { StatsAnalComponent } from './stats-anal/stats-anal.component';
+import { StatsAnalytikComponent } from './stats-analytik/stats-analytik.component';
 import { StatsPraeComponent } from './stats-prae/stats-prae.component';
 
 const routes: Routes = [
@@ -70,12 +70,12 @@ const routes: Routes = [
   { path: 'error',   component: ErrorCheckComponent},
   { path: 'display', component: DisplayComponent },
   { path: 'admin', component: AdminComponent },
-  { path: 'displayAnalytik', component: DisplayAnalComponent },
-  { path: 'adminAnalytik', component: AdminAnalComponent },
+  { path: 'displayAnalytik', component: DisplayAnalytikComponent },
+  { path: 'adminAnalytik', component: AdminAnalytikComponent },
   { path: 'displayPraeanalytik', component: DisplayPraeComponent },
   { path: 'adminPraeanalytik', component: AdminPraeComponent },
   { path: 'statsPooling', component: StatsComponent },
-  { path: 'statsAnalytik', component: StatsAnalComponent },
+  { path: 'statsAnalytik', component: StatsAnalytikComponent },
   { path: 'statsPraeanalytik', component: StatsPraeComponent },
   { path: '**', redirectTo: ''}
 ];
@@ -97,22 +97,22 @@ const routes: Routes = [
     AdminNComponent,
     PositionComponent,
     SettingsComponent,
-    AdminAnalComponent,
+    AdminAnalytikComponent,
     AdminPraeComponent,
-    AdminFAnalComponent,
+    AdminFAnalytikComponent,
     AdminFPraeComponent,
     AdminSPraeComponent,
-    AdminSAnalComponent,
-    AdminNAnalComponent,
+    AdminSAnalytikComponent,
+    AdminNAnalytikComponent,
     AdminNPraeComponent,
-    DisplayAnalComponent,
+    DisplayAnalytikComponent,
     DisplayPraeComponent,
-    PositionAnalComponent,
+    PositionAnalytikComponent,
     PositionPraeComponent,
-    SettingsAnalComponent,
+    SettingsAnalytikComponent,
     SettingsPraeComponent,
     StatsComponent,
-    StatsAnalComponent,
+    StatsAnalytikComponent,
     StatsPraeComponent
   ],
   imports: [
